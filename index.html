@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Beni Affeder misin?</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      background-image: url('alpersude.jpg');
+      background-size: contain;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-color: #000;
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative; /* emoji yağmuru için */
+    }
+
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 2;
+      background-color: rgba(255, 255, 255, 0.85);
+      padding: 40px;
+      margin: 100px auto;
+      border-radius: 20px;
+      width: fit-content;
+      animation: slideDown 1s ease-out;
+      max-width: 90vw;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      color: #d6336c;
+      margin-bottom: 30px;
+      text-shadow: 1px 1px 2px #000;
+    }
+
+    #buttons {
+      margin-top: 20px;
+      position: relative;
+      height: 80px; /* Buton kaçması için yeterli yükseklik */
+    }
+
+    button {
+      padding: 15px 30px;
+      margin: 10px;
+      font-size: 1.2em;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 10px #00000033;
+      position: absolute; /* kaçan buton için */
+      top: 50%;
+      transform: translateY(-50%);
+      user-select: none;
+      touch-action: manipulation;
+    }
+
+    #yesBtn {
+      background-color: #38b000;
+      color: white;
+      animation: pulse 2s infinite;
+      left: 20%;
+      position: absolute;
+      transform: translateY(-50%) scale(1);
+      transition: transform 0.3s ease;
+    }
+
+    #noBtn {
+      background-color: #d90429;
+      color: white;
+      right: 20%;
+      position: absolute;
+      transform: translateY(-50%);
+    }
+
+    button:hover {
+      transform: scale(1.1);
+      opacity: 0.9;
+    }
+
+    #message {
+      margin-top: 30px;
+      font-size: 2em;
+      color: #1982c4;
+      display: none;
+      animation: fadeIn 1s ease forwards;
+      z-index: 5;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      50% { transform: translateX(5px); }
+      75% { transform: translateX(-5px); }
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(56, 176, 0, 0.7); }
+      70% { box-shadow: 0 0 0 20px rgba(56, 176, 0, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(56, 176, 0, 0); }
+    }
+
+    .shake {
+      animation: shake 0.3s;
+    }
+
+    .hearts {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 3rem;
+      color: pink;
+      animation: floatHearts 2s ease-out forwards;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    @keyframes floatHearts {
+      0% { top: 50%; opacity: 1; }
+      100% { top: -100px; opacity: 0; }
+    }
+
+    /* Emoji yağmuru için stil */
+    .emoji-drop {
+      position: fixed;
+      font-size: 24px;
+      user-select: none;
+      pointer-events: none;
+      animation-name: fall;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+      opacity: 0.8;
+      z-index: 10;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-50px);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(110vh);
+        opacity: 0;
+      }
+    }
+
+    /* Mobil görünüm */
+    @media (max-width: 600px) {
+      .container {
+        padding: 30px 20px;
+        margin: 50px 10px;
+        width: 95vw;
+        border-radius: 15px;
+      }
+
+      h1 {
+        font-size: 1.8em;
+      }
+
+      #buttons {
+        height: auto;
+        position: static;
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+      }
+
+      button {
+        position: static !important;
+        transform: none !important;
+        padding: 18px 25px;
+        font-size: 1.4em;
+        margin: 0;
+        flex: 1;
+        max-width: 150px;
+      }
+
+      #yesBtn {
+        animation: pulse 2s infinite;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="overlay"></div>
+
+  <div class="container">
+    <h1>Beni Affeder misin? 😢</h1>
+
+    <div id="buttons">
+      <button id="yesBtn">Evet 💖</button>
+      <button id="noBtn">Hayır ❌</button>
+    </div>
+
+    <div id="message">Teşekkür ederim! 💕</div>
+  </div>
+
+  <!-- Kalp efekti -->
+  <div id="hearts" class="hearts">💗💗💗</div>
+
+  <script>
+    let noCount = 0;
+
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn = document.getElementById("noBtn");
+    const message = document.getElementById("message");
+    const hearts = document.getElementById("hearts");
+
+    yesBtn.addEventListener("click", () => {
+      document.getElementById("buttons").style.display = "none";
+      message.style.display = "block";
+
+      // Kalp efekti göster
+      hearts.style.opacity = "1";
+      hearts.style.animation = "floatHearts 2s ease-out forwards";
+    });
+
+    noBtn.addEventListener("click", () => {
+      noCount++;
+      noBtn.classList.add("shake");
+      setTimeout(() => noBtn.classList.remove("shake"), 300);
+
+      if (noCount === 1) {
+        noBtn.textContent = "Emin misin?";
+        yesBtn.style.transform = "scale(1.2)";
+      } else if (noCount === 2) {
+        noBtn.textContent = "Gerçekten emin misin?";
+        yesBtn.style.transform = "scale(1.5)";
+      } else if (noCount === 3) {
+        noBtn.textContent = "Lütfen, düşün 😢";
+        yesBtn.style.transform = "scale(1.8)";
+      } else {
+        noBtn.style.display = "none";
+        yesBtn.style.transform = "scale(2)";
+      }
+    });
+
+    // Hayır butonunun kaçması için fonksiyon
+    function moveNoButton() {
+      const btn = noBtn;
+      const container = document.querySelector(".container");
+      const containerRect = container.getBoundingClientRect();
+
+      const btnWidth = btn.offsetWidth;
+      const btnHeight = btn.offsetHeight;
+
+      // Buton kaçacak alan sınırları (container içinde)
+      const padding = 20; // kenarlardan biraz boşluk
+      const maxX = containerRect.width - btnWidth - padding;
+      const maxY = containerRect.height - btnHeight - padding;
+
+      // Rastgele yeni pozisyonlar
+      const newX = Math.random() * maxX + padding;
+      const newY = Math.random() * maxY + padding;
+
+      btn.style.left = `${newX}px`;
+      btn.style.top = `${newY}px`;
+    }
+
+    // Fare veya dokunma hareketinde kaçma
+    noBtn.addEventListener("mouseenter", () => {
+      if (window.innerWidth > 600) { // masaüstü için
+        moveNoButton();
+      }
+    });
+
+    noBtn.addEventListener("touchstart", (e) => {
+      e.preventDefault(); // tıklama engelle
+      if (window.innerWidth <= 600) { // mobil için
+        moveNoButton();
+      }
+    });
+
+    // Emoji yağmuru
+    const emojis = ["💖", "💕", "💗", "❤️", "💘", "❣️", "💞"];
+    function createEmoji() {
+      const emoji = document.createElement("div");
+      emoji.classList.add("emoji-drop");
+      emoji.style.left = Math.random() * 100 + "vw";
+      emoji.style.fontSize = (14 + Math.random() * 24) + "px";
+      emoji.style.animationDuration = (4 + Math.random() * 3) + "s";
+      emoji.style.animationDelay = Math.random() * 5 + "s";
+      emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+
+      document.body.appendChild(emoji);
+
+      // 7 saniye sonra kaldır
+      setTimeout(() => {
+        emoji.remove();
+      }, 7000);
+    }
+
+    // Sürekli emoji oluştur
+    setInterval(createEmoji, 350);
+
+  </script>
+
+</body>
+</html>
+
